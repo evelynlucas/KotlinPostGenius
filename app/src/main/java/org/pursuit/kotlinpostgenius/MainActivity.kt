@@ -27,22 +27,14 @@ class MainActivity : AppCompatActivity() {
     private fun createUser() {
         val userInfo: UserInfo = UserInfo(
             0,
-            "me@me.com", "mo", "Syzlak", "mo.jpg"
+            "me@me.com", "Mo", "Syzlak", "mo.jpg"
         )
 
-//        disposable =
-//            wikiApiServe.hitCountCheck("query", "json", "search", srsearch)
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(
-//                    { result -> showResult(result.query.searchinfo.totalhits) },
-//                    { error -> showError(error.message) }
-//                )
 
         disposable =
         RetrofitSingleton.getInstance()
             ?.create(UserService::class.java)
-            ?.createUser(userInfo)
+            ?.getUsers()
             ?.subscribeOn(Schedulers.io())
             ?.observeOn(AndroidSchedulers.mainThread())
             ?.subscribe(
