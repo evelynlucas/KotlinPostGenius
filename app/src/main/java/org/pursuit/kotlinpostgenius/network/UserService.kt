@@ -15,5 +15,5 @@ interface UserService {
     fun getUsers() : Single<DataWrapper>
 
     @POST(ENDPOINT_URL)
-    fun createUser(@Body userInfo: UserInfo): Single<DataWrapper>
+    fun createUser(@Body userInfo: UserInfo): Single<UserInfo>
 }

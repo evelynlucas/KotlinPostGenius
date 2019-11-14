@@ -30,20 +30,34 @@ class MainActivity : AppCompatActivity() {
             "me@me.com", "Mo", "Syzlak", "mo.jpg"
         )
 
-
+        //THIS IS POST REQUEST
         disposable =
-        RetrofitSingleton.getInstance()
-            ?.create(UserService::class.java)
-            ?.getUsers()
-            ?.subscribeOn(Schedulers.io())
-            ?.observeOn(AndroidSchedulers.mainThread())
-            ?.subscribe(
-                {
-                    val dataWrapper: DataWrapper = it
-                val userInfo: UserInfo = dataWrapper.data.get(0)
-                textView.setText(userInfo.first_name)
-            },
-                { callError()})
+            RetrofitSingleton.getInstance()
+                ?.create(UserService::class.java)
+                ?.createUser(userInfo)
+                ?.subscribeOn(Schedulers.io())
+                ?.observeOn(AndroidSchedulers.mainThread())
+                ?.subscribe(
+                    {
+                        val userInfo: UserInfo = it
+                        textView.setText(userInfo.first_name)
+                    },
+                    { callError()})
+
+// THIS IS GET REQUEST
+//        disposable =
+//        RetrofitSingleton.getInstance()
+//            ?.create(UserService::class.java)
+//            ?.getUsers()
+//            ?.subscribeOn(Schedulers.io())
+//            ?.observeOn(AndroidSchedulers.mainThread())
+//            ?.subscribe(
+//                {
+//                    val dataWrapper: DataWrapper = it
+//                val userInfo: UserInfo = dataWrapper.data.get(0)
+//                textView.setText(userInfo.first_name)
+//            },
+//                { callError()})
 
     }
 
