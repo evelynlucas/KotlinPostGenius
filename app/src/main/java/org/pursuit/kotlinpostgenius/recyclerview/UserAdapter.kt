@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import org.pursuit.kotlinpostgenius.R
 
-class AnimalAdapter(val items : ArrayList<Int>, val context: Context) : RecyclerView.Adapter<UserViewHolder>() {
+class UserAdapter(val items : ArrayList<Int>, val context: Context) : RecyclerView.Adapter<UserViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
