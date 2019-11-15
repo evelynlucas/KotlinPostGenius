@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.RecyclerView
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
@@ -16,6 +17,7 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var textView: TextView
     var disposable: Disposable? = null
+    val users: ArrayList<UserInfo> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,7 +29,7 @@ class MainActivity : AppCompatActivity() {
     private fun createUser() {
         val userInfo: UserInfo = UserInfo(
             0,
-            "me@me.com", "Mo", "Syzlak", "mo.jpg"
+            "Mo", "mo.jpg"
         )
 
         //THIS IS POST REQUEST
@@ -51,11 +53,16 @@ class MainActivity : AppCompatActivity() {
             ?.getUsers()
             ?.subscribeOn(Schedulers.io())
             ?.observeOn(AndroidSchedulers.mainThread())
+            ?.map { it -> it.data }
             ?.subscribe(
                 {
-                    val dataWrapper: DataWrapper = it
-                val userInfo: UserInfo = dataWrapper.data.get(0)
-                textView.setText(userInfo.first_name)
+//                    val dataWrapper: DataWrapper = it
+//                val userInfo: UserInfo = dataWrapper.data.get(0)
+//                textView.setText(userInfo.first_name)
+                    for (user in it) {
+                        users.add(user)
+                    }
+
             },
                 { t -> Log.d("ERRORTAG", t.localizedMessage)})
 
