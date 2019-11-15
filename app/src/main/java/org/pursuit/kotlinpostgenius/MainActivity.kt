@@ -22,25 +22,20 @@ class MainActivity : AppCompatActivity() {
     var disposable: Disposable? = null
     val users: ArrayList<UserInfo> = ArrayList()
 
-
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         textView = findViewById(R.id.trial_textview)
         createUser()
 
-        val rv = findViewById<RecyclerView>(R.id.recyclerview)
-        rv.layoutManager = LinearLayoutManager(this, VERTICAL, false)
-        var adapter = UserAdapter(users)
-        rv.adapter = adapter
+
+
     }
 
     private fun createUser() {
         val userInfo: UserInfo = UserInfo(
             0,
-            "me@me.com", "Mo", "Syzlak", "mo.jpg"
+            "Mo", "mo.jpg"
         )
 
         //THIS IS POST REQUEST
@@ -64,11 +59,20 @@ class MainActivity : AppCompatActivity() {
             ?.getUsers()
             ?.subscribeOn(Schedulers.io())
             ?.observeOn(AndroidSchedulers.mainThread())
+            ?.map { it -> it.data }
             ?.subscribe(
                 {
-                    val dataWrapper: DataWrapper = it
-                val userInfo: UserInfo = dataWrapper.data.get(0)
-                textView.setText(userInfo.first_name)
+//                    val dataWrapper: DataWrapper = it
+//                val userInfo: UserInfo = dataWrapper.data.get(0)
+//                textView.setText(userInfo.first_name)
+                    for (user in it) {
+                        users.add(user)
+                    }
+                    Log.d("LISTSIZE", "size=" + users.size)
+                    val rv = findViewById<RecyclerView>(R.id.recyclerview)
+                    rv.layoutManager = LinearLayoutManager(this, VERTICAL, false)
+                    var adapter = UserAdapter(users)
+                    rv.adapter = adapter
             },
                 { t -> Log.d("ERRORTAG", t.localizedMessage)})
 
