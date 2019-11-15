@@ -31,33 +31,33 @@ class MainActivity : AppCompatActivity() {
         )
 
         //THIS IS POST REQUEST
-        disposable =
-            RetrofitSingleton.getInstance()
-                ?.create(UserService::class.java)
-                ?.createUser(userInfo)
-                ?.subscribeOn(Schedulers.io())
-                ?.observeOn(AndroidSchedulers.mainThread())
-                ?.subscribe(
-                    {
-                        val userInfo: UserInfo = it
-                        textView.setText(userInfo.first_name)
-                    },
-                    { callError()})
+//        disposable =
+//            RetrofitSingleton.getInstance()
+//                ?.create(UserService::class.java)
+//                ?.createUser(userInfo)
+//                ?.subscribeOn(Schedulers.io())
+//                ?.observeOn(AndroidSchedulers.mainThread())
+//                ?.subscribe(
+//                    {
+//                        val userInfo: UserInfo = it
+//                        textView.setText(userInfo.first_name)
+//                    },
+//                    { callError()})
 
 // THIS IS GET REQUEST
-//        disposable =
-//        RetrofitSingleton.getInstance()
-//            ?.create(UserService::class.java)
-//            ?.getUsers()
-//            ?.subscribeOn(Schedulers.io())
-//            ?.observeOn(AndroidSchedulers.mainThread())
-//            ?.subscribe(
-//                {
-//                    val dataWrapper: DataWrapper = it
-//                val userInfo: UserInfo = dataWrapper.data.get(0)
-//                textView.setText(userInfo.first_name)
-//            },
-//                { callError()})
+        disposable =
+        RetrofitSingleton.getInstance()
+            ?.create(UserService::class.java)
+            ?.getUsers()
+            ?.subscribeOn(Schedulers.io())
+            ?.observeOn(AndroidSchedulers.mainThread())
+            ?.subscribe(
+                {
+                    val dataWrapper: DataWrapper = it
+                val userInfo: UserInfo = dataWrapper.data.get(0)
+                textView.setText(userInfo.first_name)
+            },
+                { t -> Log.d("ERRORTAG", t.localizedMessage)})
 
     }
 
