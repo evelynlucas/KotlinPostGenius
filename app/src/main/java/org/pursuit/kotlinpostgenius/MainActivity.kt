@@ -4,6 +4,9 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.VERTICAL
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
@@ -11,17 +14,27 @@ import org.pursuit.kotlinpostgenius.model.DataWrapper
 import org.pursuit.kotlinpostgenius.model.UserInfo
 import org.pursuit.kotlinpostgenius.network.RetrofitSingleton
 import org.pursuit.kotlinpostgenius.network.UserService
+import org.pursuit.kotlinpostgenius.recyclerview.UserAdapter
 
 class MainActivity : AppCompatActivity() {
 
     lateinit var textView: TextView
     var disposable: Disposable? = null
+    val users: ArrayList<UserInfo> = ArrayList()
+
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         textView = findViewById(R.id.trial_textview)
         createUser()
+
+        val rv = findViewById<RecyclerView>(R.id.recyclerview)
+        rv.layoutManager = LinearLayoutManager(this, VERTICAL, false)
+        var adapter = UserAdapter(users)
+        rv.adapter = adapter
     }
 
     private fun createUser() {
