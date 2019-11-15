@@ -7,7 +7,7 @@ import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
 
-private const val ENDPOINT_URL = "users"
+private const val ENDPOINT_URL = "evelynlucas/KotlinPostGenius/master/UserDatabase.json"
 
 interface UserService {
 
